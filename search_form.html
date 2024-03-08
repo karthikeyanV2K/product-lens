@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Search Form</title>
+</head>
+
+<body>
+    <h1>Flask Search Form</h1>
+    <form action="{{ url_for('search') }}" method="GET" name="">
+        <input type="text" name="k" placeholder="Search for something">
+        <input type="submit" name="" value="Search">
+    </form>
+</body>
+
+</html>

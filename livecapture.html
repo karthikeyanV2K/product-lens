@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Capture</title>
+</head>
+<body>
+
+<script>
+    // JavaScript code for live camera capture
+    const video = document.createElement('video');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+            document.body.appendChild(video);
+            return video.play();
+        })
+        .catch((error) => {
+            console.error('Error accessing camera:', error);
+        });
+
+    video.addEventListener('play', () => {
+        // Set the canvas size to match the video stream
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Periodically capture frames from the video stream
+        setInterval(() => {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas image data to base64-encoded image data
+            const imageData = canvas.toDataURL('image/jpeg', 0.8);
+
+            // Create a FormData object and append the image data
+            const formData = new FormData();
+            formData.append('imageData', imageData);
+
+            // Send the image data to the server for processing
+            fetch('/capture_image', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Server response:', result);
+
+                    // Handle the result as needed (e.g., update UI)
+                    // Replace the following line with your actual logic
+                    document.getElementById('result').innerText = result.result;
+                })
+                .catch(error => {
+                    console.error('Error processing image on the server:', error);
+                });
+        }, 1000);  // Capture a frame every 1000 milliseconds (adjust as needed)
+    });
+
+</script>
+
+<div id="result"></div>
+
+</body>
+</html>

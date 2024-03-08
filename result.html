@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Result</title>
+</head>
+<body>
+    <h1>Image Processing Result</h1>
+    
+    {% if top_similar_folders %}
+        <p>Top 5 Similar Folders: {{ top_similar_folders|join(', ') }}</p>
+        <script>
+            // Redirect the user to the search URL
+            document.addEventListener('DOMContentLoaded', function() {
+                var topSimilarFolders = "{{ top_similar_folders|join(', ') }}";
+                window.location.href = 'http://localhost/index/index.php?k=' + encodeURIComponent(topSimilarFolders);
+            });
+        </script>
+    {% else %}
+        <p>No similar images found in the dataset.</p>
+    {% endif %}
+</body>
+</html>

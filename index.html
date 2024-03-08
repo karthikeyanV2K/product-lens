@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #c0c0c0, #4d2a7f);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1 {
+            color: #000;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            z-index: 1;
+            position: relative;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        label {
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        label:hover {
+            background-color: #2980b9;
+        }
+
+        #file {
+            display: none;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function openFileSelector() {
+            document.getElementById('file').click();
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Image Processing</h1>
+        <form action="/process_image" method="post" enctype="multipart/form-data" id="imageForm">
+            <input type="file" name="file" id="file" accept="image/*" style="display: none;" onchange="document.getElementById('uploadBtn').innerHTML = 'File Selected';">
+            <br>
+    
+            <input type="radio" name="capture_option" value="upload" checked>
+            <label for="upload_option" id="uploadBtn" onclick="openFileSelector()">Upload Image</label>
+    
+            <input type="radio" name="capture_option" value="camera">
+            <label for="camera_option">Capture</label>
+            <br>
+    
+            <button type="submit">Process Image</button>
+        </form>
+    </div>
+</body>
+</html>
